@@ -1,5 +1,6 @@
 package com.dong.vn.app.security;
 
+import com.dong.vn.app.entity.Mouse;
 import io.jmix.rest.security.role.RestMinimalRole;
 import io.jmix.security.model.EntityAttributePolicyAction;
 import io.jmix.security.model.EntityPolicyAction;
@@ -10,14 +11,14 @@ import io.jmix.security.role.annotation.SpecificPolicy;
 import io.jmix.securityflowui.role.annotation.MenuPolicy;
 import io.jmix.securityflowui.role.annotation.ViewPolicy;
 
-@ResourceRole(name = "Full Access", code = FullAccessRole.CODE)
-public interface FullAccessRole{
+@ResourceRole(name = "MouseManagementRole", code = MouseManagementRole.CODE, scope = "API")
+public interface MouseManagementRole extends RestMinimalRole {
+    String CODE = "mouse-management-role";
 
-    String CODE = "system-full-access";
-    @EntityPolicy(entityName = "*", actions = {EntityPolicyAction.ALL})
-    @EntityAttributePolicy(entityName = "*", attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = Mouse.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Mouse.class, actions = EntityPolicyAction.ALL)
     @ViewPolicy(viewIds = "*")
     @MenuPolicy(menuIds = "*")
     @SpecificPolicy(resources = "*")
-    void fullAccess();
+    void mouse();
 }
